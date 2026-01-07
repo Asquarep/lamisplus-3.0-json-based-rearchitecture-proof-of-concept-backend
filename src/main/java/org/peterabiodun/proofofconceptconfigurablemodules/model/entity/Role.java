@@ -1,9 +1,10 @@
-package com.peterabiodun.eventsmanagementmusala.entity;
+package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
-import com.peterabiodun.eventsmanagementmusala.dto.RoleDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
-
-import jakarta.persistence.*;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.RoleDto;
 
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "roles")

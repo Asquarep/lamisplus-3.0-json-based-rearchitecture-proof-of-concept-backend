@@ -14,7 +14,7 @@ public class FieldConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String display;
     private String name;
     private String type;
     @Column(name = "is_unique")
@@ -29,6 +29,7 @@ public class FieldConfig {
     public static FieldConfig fromDto(FieldConfigDto dto) {
         return FieldConfig.builder()
                 .id(dto.getId())
+                .display(dto.getDisplay())
                 .name(dto.getName())
                 .type(dto.getType())
                 .required(dto.isRequired())

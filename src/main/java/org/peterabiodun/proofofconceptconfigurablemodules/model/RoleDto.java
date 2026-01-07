@@ -1,8 +1,8 @@
-package com.peterabiodun.eventsmanagementmusala.dto;
+package org.peterabiodun.proofofconceptconfigurablemodules.model;
 
-import com.peterabiodun.eventsmanagementmusala.entity.Role;
 import lombok.Builder;
 import lombok.Data;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.Role;
 
 import java.util.UUID;
 

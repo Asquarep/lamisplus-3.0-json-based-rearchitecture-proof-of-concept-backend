@@ -1,5 +1,6 @@
-package com.peterabiodun.eventsmanagementmusala.config.security;
+package org.peterabiodun.proofofconceptconfigurablemodules.config.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +35,9 @@ public class SecurityConfigurer {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    public CorsConfigurationSource corsConfigurationSource;
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
         return new JwtAuthenticationFilter();
@@ -38,25 +45,36 @@ public class SecurityConfigurer {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/users/**").permitAll()
-                                .requestMatchers("/login/**").permitAll()
+                                .requestMatchers("/api/login/**").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers(
+                                        "/",
+                                        "/index.html",
+                                        "/favicon.ico",
+                                        "/assets/**",
+                                        "/static/**",
+                                        "/css/**",
+                                        "/js/**"
+                                ).permitAll()
                                 .requestMatchers("/swagger-resources",
                                                     "/swagger-resources/**",
                                                     "/configuration/ui",
                                                     "/configuration/security",
                                                     "/swagger-ui.html",
-                                                    "/event-booking-swagger.yml",
                                                     "/webjars/**",
                                                     "/v3/api-docs/**",
                                                     "/api-docs/**",
                                                     "/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated())
+                .formLogin(form -> form.disable())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults());
         http.authenticationProvider(authenticationProvider());
@@ -64,6 +82,19 @@ public class SecurityConfigurer {
 
         http.headers(AbstractHttpConfigurer::disable);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling(exception -> exception
+                .authenticationEntryPoint(
+                        (request, response, authException) -> {
+                            response.setContentType("application/json");
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getOutputStream().println("{ \"error\": \"Unauthorized\" }");
+                        }
+                )
+        );
+
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource));
+
 
         return http.build();
     }
@@ -86,5 +117,6 @@ public class SecurityConfigurer {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
 
 }

@@ -1,18 +1,15 @@
-package com.peterabiodun.eventsmanagementmusala.dto;
+package org.peterabiodun.proofofconceptconfigurablemodules.model;
 
-import com.peterabiodun.eventsmanagementmusala.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.User;
 
-import java.beans.Transient;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static com.peterabiodun.eventsmanagementmusala.dto.RoleDto.fromRole;
 
 @Data
 @Builder

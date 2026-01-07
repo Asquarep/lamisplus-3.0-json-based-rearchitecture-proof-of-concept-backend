@@ -1,7 +1,6 @@
 package org.peterabiodun.proofofconceptconfigurablemodules.service;
 
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FormConfigDto;
-import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.FormConfig;
 import org.peterabiodun.proofofconceptconfigurablemodules.repository.FormRepository;
 import org.peterabiodun.proofofconceptconfigurablemodules.repository.GenericJdbcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class FormDataService {
     private FormRepository formRepository;
 
     // Save data to dynamic table
-    public void saveFormData(String tableName, Map<String, String> data) {
+    public void saveFormData(String tableName, Map<String, Object> data) {
         repo.insert(tableName.toLowerCase(), data);
     }
 

@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.utils;
+package org.peterabiodun.proofofconceptconfigurablemodules.util;
 
 import org.springframework.stereotype.Component;
 

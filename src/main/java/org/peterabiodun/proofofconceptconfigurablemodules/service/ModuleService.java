@@ -82,7 +82,7 @@ public class ModuleService {
             for (FormConfigDto form : module.getForms()) {
                 String tableName = form.getTableName().toLowerCase();
 
-                // Create table only if not exists
+                // Create table if not exists
                 writer.write("  <changeSet id=\"create-" + tableName + "\" author=\"system\">\n");
                 writer.write("    <preConditions onFail=\"MARK_RAN\">\n");
                 writer.write("      <not><tableExists tableName=\"" + tableName + "\"/></not>\n");
@@ -97,23 +97,46 @@ public class ModuleService {
                 // Add missing columns
                 for (FieldConfigDto field : form.getFields()) {
                     String columnName = field.getName().toLowerCase();
+                    String sqlType = mapFieldTypeToSqlType(field.getType());
+
                     writer.write("  <changeSet id=\"add-" + tableName + "-" + columnName + "\" author=\"system\">\n");
                     writer.write("    <preConditions onFail=\"MARK_RAN\">\n");
                     writer.write("      <not><columnExists tableName=\"" + tableName + "\" columnName=\"" + columnName + "\"/></not>\n");
                     writer.write("    </preConditions>\n");
                     writer.write("    <addColumn tableName=\"" + tableName + "\">\n");
-                    writer.write("      <column name=\"" + columnName + "\" type=\"VARCHAR(255)\"/>\n");
+                    writer.write("      <column name=\"" + columnName + "\" type=\"" + sqlType + "\"/>\n");
                     writer.write("    </addColumn>\n");
                     writer.write("  </changeSet>\n");
                 }
+            }
 
             writer.write("</databaseChangeLog>\n");
-            writer.close();
         }
 
-            runLiquibaseChangeLog(changeLogFile);
+        runLiquibaseChangeLog(changeLogFile);
     }
+
+    /**
+     * Maps the configured field type to its corresponding SQL type.
+     */
+    private String mapFieldTypeToSqlType(String fieldType) {
+        if (fieldType == null) return "VARCHAR(255)";
+
+        switch (fieldType.toLowerCase()) {
+            case "int":
+                return "INT";
+            case "date":
+            case "datetime":
+                return "DATE";
+            case "boolean":
+            case "bool":
+                return "BOOLEAN";
+            case "string":
+            default:
+                return "VARCHAR(255)";
+        }
     }
+
 
     private void runLiquibaseChangeLog(File changeLogFile) throws Exception {
         try (Connection connection = dataSource.getConnection()) {

@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.exception;
+package org.peterabiodun.proofofconceptconfigurablemodules.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String s) {

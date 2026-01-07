@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.service.notificationservice;
+package org.peterabiodun.proofofconceptconfigurablemodules.service.notificationservice;
 
 import java.util.Map;
 

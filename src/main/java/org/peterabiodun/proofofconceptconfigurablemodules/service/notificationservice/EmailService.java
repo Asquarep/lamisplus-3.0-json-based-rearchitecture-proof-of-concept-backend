@@ -1,7 +1,7 @@
-package com.peterabiodun.eventsmanagementmusala.service.notificationservice;
+package org.peterabiodun.proofofconceptconfigurablemodules.service.notificationservice;
 
-import com.peterabiodun.eventsmanagementmusala.exception.MailSenderException;
 import jakarta.mail.internet.MimeMessage;
+import org.peterabiodun.proofofconceptconfigurablemodules.exception.MailSenderException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;

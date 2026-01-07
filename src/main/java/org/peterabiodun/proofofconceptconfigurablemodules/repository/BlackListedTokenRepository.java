@@ -1,7 +1,7 @@
-package com.peterabiodun.eventsmanagementmusala.repository;
+package org.peterabiodun.proofofconceptconfigurablemodules.repository;
 
 
-import com.peterabiodun.eventsmanagementmusala.entity.BlackListedToken;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.BlackListedToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

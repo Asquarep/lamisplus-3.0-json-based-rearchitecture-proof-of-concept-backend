@@ -33,3 +33,13 @@ build/
 .vscode/
 /modules/
 /src/main/resources/db/changelog/
+
+#environment files
+.env
+
+#statis files
+/src/main/resources/static
+
+# node files
+
+/src/main/webapp/node

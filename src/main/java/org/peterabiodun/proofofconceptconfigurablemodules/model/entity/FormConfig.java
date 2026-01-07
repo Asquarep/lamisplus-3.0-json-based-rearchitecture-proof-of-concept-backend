@@ -2,9 +2,7 @@ package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.peterabiodun.proofofconceptconfigurablemodules.model.FieldConfigDto;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FormConfigDto;
-import org.peterabiodun.proofofconceptconfigurablemodules.model.ModuleConfigDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +17,7 @@ public class FormConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String display;
     private String tableName;
     @ManyToOne
     @JoinColumn(name = "module_id")
@@ -29,7 +27,7 @@ public class FormConfig {
     
     public static FormConfig fromDto(FormConfigDto dto) {
         return FormConfig.builder()
-                .name(dto.getName())
+                .display(dto.getDisplay())
                 .tableName(dto.getTableName())
                 .module(null)
                 .fields(dto.getFields().stream().map(FieldConfig::fromDto).collect(Collectors.toList()))

@@ -1,13 +1,11 @@
-package com.peterabiodun.eventsmanagementmusala.controller;
+package org.peterabiodun.proofofconceptconfigurablemodules.controller;
 
-import com.peterabiodun.eventsmanagementmusala.dto.CreateUserdto;
-import com.peterabiodun.eventsmanagementmusala.dto.LoginDto;
-import com.peterabiodun.eventsmanagementmusala.dto.UserDto;
-import com.peterabiodun.eventsmanagementmusala.service.UserService;
 import jakarta.validation.Valid;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.CreateUserdto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.UserDto;
+import org.peterabiodun.proofofconceptconfigurablemodules.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

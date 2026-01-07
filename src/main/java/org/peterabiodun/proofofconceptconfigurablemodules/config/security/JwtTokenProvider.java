@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.config.security;
+package org.peterabiodun.proofofconceptconfigurablemodules.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,7 +31,8 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
 
-        return "Bearer " + token;
+//        return "Bearer " + token;
+        return token;
     }
 
     public String generateSignUpConfirmationToken(String email){

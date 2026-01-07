@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface FormRepository extends JpaRepository<FormConfig, Long> {
-    boolean existsByName(String name);
 
     @Query(value = "SELECT * FROM forms WHERE module_id = ?1 ", nativeQuery = true)
     List<FormConfig> findByModuleId(Long moduleId);

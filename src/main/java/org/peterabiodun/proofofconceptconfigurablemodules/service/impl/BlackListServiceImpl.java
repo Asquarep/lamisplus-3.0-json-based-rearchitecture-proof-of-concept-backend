@@ -1,9 +1,9 @@
-package com.peterabiodun.eventsmanagementmusala.service.impl;
+package org.peterabiodun.proofofconceptconfigurablemodules.service.impl;
 
-import com.peterabiodun.eventsmanagementmusala.entity.BlackListedToken;
-import com.peterabiodun.eventsmanagementmusala.repository.BlackListedTokenRepository;
-import com.peterabiodun.eventsmanagementmusala.service.BlackListService;
 import lombok.RequiredArgsConstructor;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.BlackListedToken;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.BlackListedTokenRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.service.BlackListService;
 import org.springframework.stereotype.Service;
 
 @Service

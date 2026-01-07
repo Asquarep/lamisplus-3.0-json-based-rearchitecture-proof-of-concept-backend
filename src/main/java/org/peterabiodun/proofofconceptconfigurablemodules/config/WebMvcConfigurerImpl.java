@@ -1,7 +1,6 @@
 package org.peterabiodun.proofofconceptconfigurablemodules.config;
 
-public class WebMvcConfigurer {
-}
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +32,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(false)
                 .addResolver(new PushStateResourceResolver());
-        registry.addResourceHandler("/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+        registry.addResourceHandler("/swagger-ui/index.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
@@ -67,7 +65,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 
             }
             if (isHandled(requestPath)) {
-                if(requestPath.equals("swagger-ui.html")){
+                if(requestPath.equals("swagger-ui/index.html")){
                     return new ClassPathResource("/META-INF/resources/swagger-ui.html");
                 }
                 return locations.stream()

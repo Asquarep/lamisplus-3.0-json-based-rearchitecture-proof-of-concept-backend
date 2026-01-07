@@ -9,6 +9,7 @@ import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.FieldConf
 @AllArgsConstructor
 public class FieldConfigDto {
     Long id;
+    private String display;
     private String name;
     private String type;
     private boolean required;
@@ -17,6 +18,7 @@ public class FieldConfigDto {
     public static FieldConfigDto fromEntity(FieldConfig entity) {
         return FieldConfigDto.builder()
                 .id(entity.getId())
+                .display(entity.getDisplay())
                 .name(entity.getName())
                 .type(entity.getType())
                 .required(entity.isRequired())

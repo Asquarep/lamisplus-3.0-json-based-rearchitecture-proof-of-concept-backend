@@ -1,26 +1,24 @@
-package com.peterabiodun.eventsmanagementmusala.service.impl;
+package org.peterabiodun.proofofconceptconfigurablemodules.service.impl;
 
-
-import com.peterabiodun.eventsmanagementmusala.dto.CreateUserdto;
-import com.peterabiodun.eventsmanagementmusala.dto.UserDto;
-import com.peterabiodun.eventsmanagementmusala.entity.Role;
-import com.peterabiodun.eventsmanagementmusala.entity.User;
-import com.peterabiodun.eventsmanagementmusala.exception.BadRequestException;
-import com.peterabiodun.eventsmanagementmusala.exception.ResourceNotFoundException;
-import com.peterabiodun.eventsmanagementmusala.repository.RoleRepository;
-import com.peterabiodun.eventsmanagementmusala.repository.UserRepository;
-import com.peterabiodun.eventsmanagementmusala.service.UserService;
-import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.peterabiodun.proofofconceptconfigurablemodules.exception.BadRequestException;
+import org.peterabiodun.proofofconceptconfigurablemodules.exception.ResourceNotFoundException;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.CreateUserdto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.UserDto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.Role;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.User;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.RoleRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.UserRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.peterabiodun.eventsmanagementmusala.entity.User.fromCreateUserDto;
+import static org.peterabiodun.proofofconceptconfigurablemodules.model.entity.User.fromCreateUserDto;
+
 
 @Slf4j
 @Service

@@ -1,30 +1,17 @@
-package com.peterabiodun.eventsmanagementmusala.entity;
+package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
 
-import com.peterabiodun.eventsmanagementmusala.dto.CreateUserdto;
-import com.peterabiodun.eventsmanagementmusala.dto.UserDto;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.CreateUserdto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.UserDto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static com.peterabiodun.eventsmanagementmusala.entity.Role.fromRoleDto;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

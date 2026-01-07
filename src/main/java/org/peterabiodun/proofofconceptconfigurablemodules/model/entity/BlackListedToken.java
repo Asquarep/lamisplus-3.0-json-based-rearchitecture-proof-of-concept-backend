@@ -1,10 +1,9 @@
-package com.peterabiodun.eventsmanagementmusala.entity;
+package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
-
-import jakarta.persistence.Table;
-import lombok.*;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

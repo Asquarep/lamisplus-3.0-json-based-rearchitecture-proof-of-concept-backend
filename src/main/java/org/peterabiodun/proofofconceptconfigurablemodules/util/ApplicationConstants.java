@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.utils;
+package org.peterabiodun.proofofconceptconfigurablemodules.util;
 
 public class ApplicationConstants {
 

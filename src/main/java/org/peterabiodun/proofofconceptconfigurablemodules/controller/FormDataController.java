@@ -21,7 +21,7 @@ public class FormDataController {
     @PostMapping("/{tableName}")
     public ResponseEntity<String> saveFormData(
             @PathVariable String tableName,
-            @RequestBody Map<String, String> payload) {
+            @RequestBody Map<String, Object> payload) {
         service.saveFormData(tableName, payload);
         return ResponseEntity.ok("Data saved");
     }

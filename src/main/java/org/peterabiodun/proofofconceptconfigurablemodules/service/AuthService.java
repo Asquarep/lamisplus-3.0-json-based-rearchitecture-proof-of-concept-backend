@@ -1,8 +1,7 @@
-package com.peterabiodun.eventsmanagementmusala.service;
+package org.peterabiodun.proofofconceptconfigurablemodules.service;
 
-import com.peterabiodun.eventsmanagementmusala.dto.LoginDto;
-import com.peterabiodun.eventsmanagementmusala.dto.UserDto;
-import org.springframework.stereotype.Service;
+
+import org.peterabiodun.proofofconceptconfigurablemodules.model.LoginDto;
 
 //@Service
 public interface AuthService {

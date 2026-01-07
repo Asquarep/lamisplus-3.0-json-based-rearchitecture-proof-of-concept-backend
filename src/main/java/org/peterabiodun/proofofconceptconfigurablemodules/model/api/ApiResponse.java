@@ -1,14 +1,18 @@
-package com.peterabiodun.eventsmanagementmusala.config.api;
+package org.peterabiodun.proofofconceptconfigurablemodules.model.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class ApiResponse<T> {
-    private boolean success;
-    private String message;
-    private T data;
+    private final boolean success;
+    private final String message;
+    private final T data;
+    private ArrayList<T> actions;
 }

@@ -1,8 +1,7 @@
-package com.peterabiodun.eventsmanagementmusala.config.security;
+package org.peterabiodun.proofofconceptconfigurablemodules.config.security;
 
-
-import com.peterabiodun.eventsmanagementmusala.entity.Role;
-import com.peterabiodun.eventsmanagementmusala.repository.UserRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.Role;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

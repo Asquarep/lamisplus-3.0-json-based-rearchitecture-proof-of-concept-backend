@@ -1,4 +1,4 @@
-package com.peterabiodun.eventsmanagementmusala.exception;
+package org.peterabiodun.proofofconceptconfigurablemodules.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -60,12 +60,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(EventNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleEventNotValidException(EventNotValidException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + ex.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)

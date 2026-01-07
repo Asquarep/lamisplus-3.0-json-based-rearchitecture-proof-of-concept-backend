@@ -1,11 +1,11 @@
-package com.peterabiodun.eventsmanagementmusala.service.impl;
+package org.peterabiodun.proofofconceptconfigurablemodules.service.impl;
 
-import com.peterabiodun.eventsmanagementmusala.config.security.JwtTokenProvider;
-import com.peterabiodun.eventsmanagementmusala.dto.LoginDto;
-import com.peterabiodun.eventsmanagementmusala.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.peterabiodun.proofofconceptconfigurablemodules.config.security.JwtTokenProvider;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.LoginDto;
+import org.peterabiodun.proofofconceptconfigurablemodules.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
             authentication = authenticationManager.authenticate(auth);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenProvider.generateToken(authentication);
-            httpServletResponse.setHeader("Authorization", token);
+            httpServletResponse.setHeader("Authorization", "Bearer " + token);
             log.info("Login Successful ${}", token);
             return token;
         }

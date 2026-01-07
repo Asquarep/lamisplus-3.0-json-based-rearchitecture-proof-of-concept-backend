@@ -1,6 +1,5 @@
-package com.peterabiodun.eventsmanagementmusala.dto;
+package org.peterabiodun.proofofconceptconfigurablemodules.model;
 
-import com.peterabiodun.eventsmanagementmusala.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Set;
 @Data
 @Builder
 public class CreateUserdto {

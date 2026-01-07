@@ -1,6 +1,6 @@
-package com.peterabiodun.eventsmanagementmusala.repository;
+package org.peterabiodun.proofofconceptconfigurablemodules.repository;
 
-import com.peterabiodun.eventsmanagementmusala.entity.Role;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
