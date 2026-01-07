@@ -1,0 +1,42 @@
+import { Route, Routes } from "react-router-dom";
+import ModuleListPage from "../pages/ModuleListPage";
+import ModuleDetailPage from "../pages/ModuleDetailPage";
+import LoginPage from "../pages/LoginPage";
+import Layout from "../components/Layout";
+import SignupPage from "../pages/SignupPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+
+
+function AppRoutes() {
+    return (
+        <Routes>
+            {/* Layout route: contains sidebar for normal pages */}
+            <Route
+                element={
+                    <Layout />
+                }
+            >
+                <Route
+                    path="/dashboard"
+                    element={<ModuleListPage />}
+                />
+                <Route
+                    path="/module"
+                    element={<ModuleDetailPage />}
+                />
+                <Route
+                    path="/upload"
+                    element={<ModuleListPage />}
+                />
+            </Route>
+
+            {/* Auth pages: no layout / sidebar */}
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        </Routes>
+    );
+}
+
+export default AppRoutes;
