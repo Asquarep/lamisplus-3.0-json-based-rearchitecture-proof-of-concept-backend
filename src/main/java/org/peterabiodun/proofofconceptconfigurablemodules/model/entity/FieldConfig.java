@@ -14,6 +14,7 @@ public class FieldConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long key;
     private String display;
     private String name;
     private String type;

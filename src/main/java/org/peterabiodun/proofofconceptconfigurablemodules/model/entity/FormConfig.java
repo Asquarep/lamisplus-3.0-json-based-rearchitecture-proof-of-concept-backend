@@ -17,8 +17,13 @@ public class FormConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String key;
     private String display;
     private String tableName;
+
+    @ManyToOne
+    private ModuleVersion moduleVersion;
+
     @ManyToOne
     @JoinColumn(name = "module_id")
     private ModuleConfig module;

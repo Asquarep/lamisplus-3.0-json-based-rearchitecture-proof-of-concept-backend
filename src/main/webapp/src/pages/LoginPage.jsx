@@ -10,6 +10,7 @@ import {
 import logo from "../assets/logo.svg";
 import useCustomNavigate from "../hooks/useCustomNavigate";
 import { login } from "../store/slices/authSlice";
+import APPLICATION_ROUTES from "../util/APPLICATION_ROUTES";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -25,9 +26,10 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("NAVIGATE CALLED");
+      console.log("IS AUTHENTICATED");
       
-      navigate("/dashboard");
+      
+      navigate(APPLICATION_ROUTES.DASHBOARD);
     }
   }, [isAuthenticated, navigate]);
 

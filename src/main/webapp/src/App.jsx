@@ -5,6 +5,8 @@ import { registerUnauthorizedHandler } from "./setting/interceptor";
 import { useDispatch } from "react-redux";
 import { logout } from "./store/slices/authSlice";
 
+import APPLICATION_ROUTES from "./util/APPLICATION_ROUTES";
+
 // Wrapper component to access location
 function AppWrapper() {
   return (
@@ -21,7 +23,7 @@ function App() {
   useEffect(() => {
     registerUnauthorizedHandler(() => {
       dispatch(logout());
-      navigate("/login", { replace: true });
+      navigate(APPLICATION_ROUTES.LOGIN, { replace: true });
     });
   }, [dispatch, navigate]);
   return (
