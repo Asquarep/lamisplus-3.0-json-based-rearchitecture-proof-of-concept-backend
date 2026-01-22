@@ -17,24 +17,25 @@ function AppRoutes() {
                 }
             >
                 <Route
-                    path="/dashboard"
+                    path="/app/dashboard"
                     element={<ModuleListPage />}
                 />
                 <Route
-                    path="/module"
+                    path="/app/module"
                     element={<ModuleDetailPage />}
                 />
                 <Route
-                    path="/upload"
+                    path="/app/upload"
                     element={<ModuleListPage />}
                 />
             </Route>
 
             {/* Auth pages: no layout / sidebar */}
             <Route path="/" element={<LoginPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/app/" element={<LoginPage />} />
+            <Route path="/app/login" element={<LoginPage />} />
+            <Route path="/app/signup" element={<SignupPage />} />
+            <Route path="/app/forgot-password" element={<ForgotPasswordPage />} />
         </Routes>
     );
 }

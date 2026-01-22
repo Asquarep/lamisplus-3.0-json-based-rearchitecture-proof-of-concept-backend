@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public class FormConfigDto {
 
     private Long id;
+    private String key;
+    private String version;
     private String display;
     private String tableName;
     private Long moduleId;
@@ -21,6 +23,8 @@ public class FormConfigDto {
     public static FormConfigDto fromEntity(FormConfig entity) {
         return FormConfigDto.builder()
                 .id(entity.getId())
+                .key(entity.getKey())
+                .version(entity.getModuleVersion())
                 .display(entity.getDisplay())
                 .tableName(entity.getTableName())
                 .moduleId(entity.getId())

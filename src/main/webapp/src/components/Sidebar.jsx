@@ -19,6 +19,7 @@ import logo from '../assets/logo.svg';
 import { logout } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchModules } from '../store/slices/modulesSlice';
+import APPLICATION_ROUTES from '../util/APPLICATION_ROUTES';
 
 const drawerWidth = 280;
 
@@ -29,7 +30,7 @@ export default function Sidebar() {
 
   const logoutUser = () => {
     dispatch(logout());
-    navigate('/login', { replace: true });
+    navigate(APPLICATION_ROUTES.LOGIN, { replace: true });
   };
 
   React.useEffect(() => {

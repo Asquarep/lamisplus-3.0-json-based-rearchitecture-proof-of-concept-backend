@@ -55,6 +55,7 @@ public class SecurityConfigurer {
                                 .requestMatchers("/api/login/**").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/app/**").permitAll()
                                 .requestMatchers(
                                         "/",
                                         "/index.html",
@@ -81,7 +82,8 @@ public class SecurityConfigurer {
 
 
         http.headers(AbstractHttpConfigurer::disable);
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new SwaggerSkipFilter(), JwtAuthenticationFilter.class);
 
         http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(

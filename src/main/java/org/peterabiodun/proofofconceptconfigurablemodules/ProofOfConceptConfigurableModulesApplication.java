@@ -17,7 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ProofOfConceptConfigurableModulesApplication {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;    public static void main(String[] args) {
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public static void main(String[] args) {
         SpringApplication.run(ProofOfConceptConfigurableModulesApplication.class, args);
     }
 

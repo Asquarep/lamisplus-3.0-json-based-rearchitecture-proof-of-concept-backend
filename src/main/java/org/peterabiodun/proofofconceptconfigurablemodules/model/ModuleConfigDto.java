@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 public class ModuleConfigDto {
     private Long id;
     private String name;
+    private String key;
     private List<FormConfigDto> forms;
 
     public  static ModuleConfigDto fromEntity(ModuleConfig moduleConfig) {
         return ModuleConfigDto.builder()
                 .id(moduleConfig.getId())
                 .name(moduleConfig.getName())
+                .key(moduleConfig.getKey())
                 .forms(moduleConfig.getForms().stream().map(FormConfigDto::fromEntity).collect(Collectors.toList()))
                 .build();
     }

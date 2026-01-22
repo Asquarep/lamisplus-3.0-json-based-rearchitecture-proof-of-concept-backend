@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class BaseEntity {

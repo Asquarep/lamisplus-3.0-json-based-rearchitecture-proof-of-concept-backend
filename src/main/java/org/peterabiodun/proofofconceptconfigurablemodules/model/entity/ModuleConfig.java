@@ -21,6 +21,8 @@ public class ModuleConfig {
     private Long id;
 
     private String name;
+    @Column(unique = true, nullable = false)
+    private String key;
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FormConfig> forms;
@@ -28,6 +30,7 @@ public class ModuleConfig {
     public static ModuleConfig fromDto(ModuleConfigDto dto) {
         return ModuleConfig.builder()
                 .name(dto.getName())
+                .key(dto.getKey())
                 .id(dto.getId())
                 .forms(
                         dto.getForms().stream().map(FormConfig::fromDto).collect(Collectors.toList())
