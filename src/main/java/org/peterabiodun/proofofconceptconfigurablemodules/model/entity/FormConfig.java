@@ -18,6 +18,7 @@ public class FormConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String key;
+    private String version;
     private String display;
     private String tableName;
 

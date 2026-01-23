@@ -248,23 +248,29 @@
         </plugins>
     </build>
     <profiles>
-
-        <!-- Default: safe for CI -->
+        <!-- CI build: strict reproducible install -->
         <profile>
             <id>ci</id>
             <properties>
                 <skipNpmInstall>false</skipNpmInstall>
+                <npmInstallArgs>ci</npmInstallArgs>
             </properties>
         </profile>
-
-        <!-- Fast local build -->
+        <!-- Fast local build: normal install -->
         <profile>
             <id>fast</id>
+            <properties>
+                <skipNpmInstall>false</skipNpmInstall>
+                <npmInstallArgs>install</npmInstallArgs>
+            </properties>
+        </profile>
+        <!-- Skip npm entirely -->
+        <profile>
+            <id>skip</id>
             <properties>
                 <skipNpmInstall>true</skipNpmInstall>
             </properties>
         </profile>
-
     </profiles>
 
 

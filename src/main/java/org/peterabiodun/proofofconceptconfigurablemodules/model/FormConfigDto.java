@@ -24,7 +24,7 @@ public class FormConfigDto {
         return FormConfigDto.builder()
                 .id(entity.getId())
                 .key(entity.getKey())
-                .version(entity.getModuleVersion())
+                .version(entity.getVersion())
                 .display(entity.getDisplay())
                 .tableName(entity.getTableName())
                 .moduleId(entity.getId())
