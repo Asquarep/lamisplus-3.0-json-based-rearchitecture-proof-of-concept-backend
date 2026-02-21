@@ -105,8 +105,7 @@ const ModuleListPage = () => {
 };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <br /><br />
+    <Box>
       <Box
         sx={{
           display: "flex",

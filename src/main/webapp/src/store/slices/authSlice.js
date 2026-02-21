@@ -1,18 +1,44 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../setting/interceptor";
 
-// async login action
+/* ============================
+   FETCH ME
+============================ */
+export const fetchMe = createAsyncThunk(
+  "auth/fetchMe",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("auth/me");
+      return response.data.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch user"
+      );
+    }
+  }
+);
+
+/* ============================
+   LOGIN
+============================ */
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.post("auth/login", {
         email,
         password,
       });
 
-      // response.data = { success, data, actions }
-      return response.data;
+      const token = response.data.data;
+
+      // store token immediately
+      localStorage.setItem("token", token);
+
+      // fetch authenticated user
+      await dispatch(fetchMe());
+
+      return token;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Login failed"
@@ -21,6 +47,9 @@ export const login = createAsyncThunk(
   }
 );
 
+/* ============================
+   INITIAL STATE
+============================ */
 const initialState = {
   user: null,
   token: localStorage.getItem("token"),
@@ -29,41 +58,57 @@ const initialState = {
   error: null,
 };
 
+/* ============================
+   SLICE
+============================ */
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logout(state) {
-      console.log("Is about to logout");
-      
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.error = null;
       localStorage.removeItem("token");
-      // window.location.href = "/";
     },
   },
   extraReducers: (builder) => {
     builder
+      /* -------- LOGIN -------- */
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-
-        // token is in data
-        const token = action.payload.data;
-
-        state.token = token;
-        state.user = null; // or populate from another API call
+        state.token = action.payload;
         state.isAuthenticated = true;
-
-        localStorage.setItem("token", token);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem("token");
+      })
+
+      /* -------- FETCH ME -------- */
+      .addCase(fetchMe.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchMe.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchMe.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem("token");
       });
   },
 });

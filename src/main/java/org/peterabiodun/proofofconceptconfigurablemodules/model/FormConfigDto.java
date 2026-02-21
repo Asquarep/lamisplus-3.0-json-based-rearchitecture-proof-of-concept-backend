@@ -1,5 +1,6 @@
 package org.peterabiodun.proofofconceptconfigurablemodules.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.FormConfig;
 
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FormConfigDto {
 
     private Long id;
@@ -24,7 +26,7 @@ public class FormConfigDto {
         return FormConfigDto.builder()
                 .id(entity.getId())
                 .key(entity.getKey())
-                .version(entity.getModuleVersion())
+//                .version(entity.getModuleVersion())
                 .display(entity.getDisplay())
                 .tableName(entity.getTableName())
                 .moduleId(entity.getId())

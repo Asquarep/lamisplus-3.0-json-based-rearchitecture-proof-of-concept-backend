@@ -6,6 +6,8 @@ import Layout from "../components/Layout";
 import SignupPage from "../pages/SignupPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 
+import SettingsPage from "../pages/SettingsPage";
+
 
 function AppRoutes() {
     return (
@@ -27,6 +29,10 @@ function AppRoutes() {
                 <Route
                     path="/app/upload"
                     element={<ModuleListPage />}
+                />
+                <Route
+                    path="/app/settings"
+                    element={<SettingsPage />}
                 />
             </Route>
 

@@ -53,7 +53,8 @@ public class SecurityConfigurer {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/users/**").permitAll()
                                 .requestMatchers("/api/login/**").permitAll()
-                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/auth/login").permitAll()
+                                .requestMatchers("/auth/me").authenticated()
                                 .requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/app/**").permitAll()
                                 .requestMatchers(

@@ -6,7 +6,8 @@ function Layout() {
   return (
     <Box style={{ display: "flex", width: "98vw", height: "100vh" }}>
       <Sidebar />
-      <Box sx={{ width: "100%", flex: 1, padding: 4 }}>
+      <Box sx={{ width: "100%", flex: 1, padding: 6 }}>
+              <br /><br />
         <Outlet />
       </Box>
     </Box>

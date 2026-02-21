@@ -19,9 +19,9 @@ public class FieldConfig {
     private String name;
     private String type;
     @Column(name = "is_unique")
-    private boolean unique;
+    private boolean unique = false;
     @Column(name = "is_required")
-    private boolean required;
+    private boolean required = false;
 
     @ManyToOne
     @JoinColumn(name = "form_id")

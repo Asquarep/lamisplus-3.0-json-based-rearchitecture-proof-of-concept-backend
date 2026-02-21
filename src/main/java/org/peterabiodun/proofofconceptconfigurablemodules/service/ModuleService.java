@@ -54,7 +54,7 @@ public class ModuleService {
             return module;
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load module from file: " + moduleFile.getName(), e);
+            throw new RuntimeException("Failed to load module from file: " + moduleFile.getName() + " - " + e.getMessage());
         }
     }
 
