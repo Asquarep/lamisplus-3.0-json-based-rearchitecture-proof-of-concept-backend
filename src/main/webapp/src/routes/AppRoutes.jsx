@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import SignupPage from "../pages/SignupPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 
-import SettingsPage from "../pages/SettingsPage";
+import AdministrationPage from "../pages/AdministrationPage";
 
 
 function AppRoutes() {
@@ -31,8 +31,8 @@ function AppRoutes() {
                     element={<ModuleListPage />}
                 />
                 <Route
-                    path="/app/settings"
-                    element={<SettingsPage />}
+                    path="/app/administration"
+                    element={<AdministrationPage />}
                 />
             </Route>
 

@@ -28,7 +28,6 @@ public abstract class BaseEntity {
 
     @PrePersist
     public void prePersist() {
-        // Set the createdDate to the current date before persisting
         this.createdDate = LocalDate.now();
     }
 

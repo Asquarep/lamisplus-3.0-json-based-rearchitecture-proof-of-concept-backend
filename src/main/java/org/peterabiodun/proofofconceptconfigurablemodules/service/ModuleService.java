@@ -64,7 +64,7 @@ public class ModuleService {
 
     private void generateLiquibaseChangeLog(ModuleConfigDto module) throws Exception {
         String fileName = "changelog-" + module.getName().toLowerCase() + "-" + UUID.randomUUID() + ".xml";
-        File changeLogFolderPath = new File("src/main/resources/db/changelog/");
+        File changeLogFolderPath = new File("src/main/resources/db/module-logs/");
         File changeLogFile = new File(changeLogFolderPath, fileName);
 
         if (!changeLogFolderPath.exists() && !changeLogFolderPath.mkdirs()) {

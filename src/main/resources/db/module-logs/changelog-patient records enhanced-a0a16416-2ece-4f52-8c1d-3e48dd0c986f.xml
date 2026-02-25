@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet id="create-patient_details_v2" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><tableExists tableName="patient_details_v2"/></not>
+    </preConditions>
+    <createTable tableName="patient_details_v2">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-first_name" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="first_name"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="first_name" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-last_name" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="last_name"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="last_name" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-email" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="email"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="email" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-phone_number" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="phone_number"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="phone_number" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-date_of_birth" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="date_of_birth"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="date_of_birth" type="DATE"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-gender" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="gender"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="gender" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-emergency_contact" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="emergency_contact"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="emergency_contact" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-blood_type" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="blood_type"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="blood_type" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-allergies" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="allergies"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="allergies" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-active_medications" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="active_medications"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="active_medications" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-insurance_provider" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="insurance_provider"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="insurance_provider" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-insurance_id" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="insurance_id"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="insurance_id" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-patient_details_v2-medical_history" author="system">
+    <preConditions onFail="MARK_RAN">
+      <not><columnExists tableName="patient_details_v2" columnName="medical_history"/></not>
+    </preConditions>
+    <addColumn tableName="patient_details_v2">
+      <column name="medical_history" type="VARCHAR(255)"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

@@ -22,6 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/authSlice';
@@ -113,7 +114,7 @@ export default function Sidebar() {
           </IconButton>
 
           <Typography variant="h6" noWrap>
-            Deda Hospital
+            Saving Lives with Data-Driven Insights - CormaFlo Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -211,12 +212,12 @@ export default function Sidebar() {
             </ListItem>
           ))}
 
-          {/* Settings */}
+          {/* Administration */}
           <ListItem disablePadding>
-            <Tooltip title={!open ? 'Settings' : ''} placement="right">
+            <Tooltip title={!open ? 'Administration' : ''} placement="right">
               <ListItemButton
                 onClick={() =>
-                  navigate(APPLICATION_ROUTES.SETTINGS)
+                  navigate(APPLICATION_ROUTES.ADMINISTRATION)
                 }
                 sx={{
                   justifyContent: open ? 'initial' : 'center',
@@ -230,9 +231,9 @@ export default function Sidebar() {
                     justifyContent: 'center',
                   }}
                 >
-                  <SettingsIcon />
+                  <AdminPanelSettingsIcon />
                 </ListItemIcon>
-                {open && <ListItemText primary="Settings" />}
+                {open && <ListItemText primary="Administration" />}
               </ListItemButton>
             </Tooltip>
           </ListItem>

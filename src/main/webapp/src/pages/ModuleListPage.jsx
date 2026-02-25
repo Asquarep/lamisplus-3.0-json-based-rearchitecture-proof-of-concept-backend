@@ -130,10 +130,27 @@ const ModuleListPage = () => {
         {modules.map((m) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={m.id}>
             <Card
+              // sx={{
+              //   cursor: "pointer",
+              //   transition: "transform 0.2s ease",
+              //   "&:hover": { transform: "scale(1.02)" },
+              // }}
               sx={{
+                height: '100%',
+                display: 'flex',
                 cursor: "pointer",
-                transition: "transform 0.2s ease",
-                "&:hover": { transform: "scale(1.02)" },
+                flexDirection: 'column',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: 6,
+                  border: '1px solid #1976d2',
+                  backgroundColor: '#dcecfcff'
+                },
+                borderRadius: 3,
+                overflow: 'hidden',
+                border: '1px solid',
+                borderColor: 'divider'
               }}
               // onClick={() => onSelectModule(m)}
             >

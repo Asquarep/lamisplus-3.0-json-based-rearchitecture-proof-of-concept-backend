@@ -5,7 +5,7 @@ const APPLICATION_ROUTES = {
   LOGIN: '/app/login',
   SIGNUP: '/app/signup',
   FORGOT_PASSWORD: '/app/forgot-password',
-  SETTINGS: '/app/settings'
+  ADMINISTRATION: '/app/administration'
 };
 
 export default APPLICATION_ROUTES;

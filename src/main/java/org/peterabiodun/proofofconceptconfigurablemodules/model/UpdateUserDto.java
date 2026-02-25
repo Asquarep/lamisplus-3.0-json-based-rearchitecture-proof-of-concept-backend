@@ -2,14 +2,16 @@ package org.peterabiodun.proofofconceptconfigurablemodules.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Set;
+import java.util.UUID;
+
 @Data
 @Builder
-public class CreateUserdto {
+public class UpdateUserDto {
     @NotBlank
     @Size(max = 100, message = "String field cannot exceed 100 characters")
     private String name;
@@ -18,11 +20,5 @@ public class CreateUserdto {
     @NotBlank
     private String email;
 
-    @NotBlank
-    @Size(min = 8, message = "Password must be a minimum of 8 characters")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and no whitespace")
-    private String password;
-
-    private java.util.Set<java.util.UUID> roleIds;
-
+    private Set<UUID> roleIds;
 }

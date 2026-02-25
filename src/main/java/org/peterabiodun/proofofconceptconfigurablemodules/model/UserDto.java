@@ -14,27 +14,35 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class UserDto {
-    private UUID id;
-    @Size(max = 100, message = "String field cannot exceed 100 characters")
-    private String name;
+        private UUID id;
+        @Size(max = 100, message = "String field cannot exceed 100 characters")
+        private String name;
 
-    @Email
-    @NotBlank
-    private String email;
+        @Email
+        @NotBlank
+        private String email;
 
-    Set<RoleDto> roles;
+        Set<RoleDto> roles;
+        private boolean isSuperUser;
+        private boolean active;
+        private boolean archived;
 
+        public static UserDto fromUser(User user) {
+                boolean isSuperUser = user.getRoles().stream()
+                                .flatMap(role -> role.getPermissions().stream())
+                                .anyMatch(p -> "ALL_PERMISSION".equals(p.getName()));
 
-    public static UserDto fromUser(User user){
-        return new UserDtoBuilder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .name(user.getName())
-                .roles(
-                        user.getRoles().stream()
-                                .map(RoleDto::fromRole)
-                                .collect(Collectors.toSet())
-                )
-                .build();
-    }
+                return new UserDtoBuilder()
+                                .id(user.getId())
+                                .email(user.getEmail())
+                                .name(user.getName())
+                                .isSuperUser(isSuperUser)
+                                .active(user.isActive())
+                                .archived(user.isArchived())
+                                .roles(
+                                                user.getRoles().stream()
+                                                                .map(RoleDto::fromEntity)
+                                                                .collect(Collectors.toSet()))
+                                .build();
+        }
 }

@@ -1,8 +1,8 @@
 export const protectedRoutes = [
   { path: "/app/dashboard", permissions: [], layout: "Layout" },
-  { path: "/app/module", permissions: ["VIEW_MODULE_DETAIL"], layout: "Layout" },
+  { path: "/app/module", permissions: [], layout: "Layout" },
   { path: "/app/upload", permissions: ["UPLOAD_MODULES"], layout: "Layout" },
-  { path: "/app/settings", permissions: [], layout: "Layout" }
+  { path: "/app/administration", permissions: [], layout: "Layout" }
 ];
 
 export const publicRoutes = [
