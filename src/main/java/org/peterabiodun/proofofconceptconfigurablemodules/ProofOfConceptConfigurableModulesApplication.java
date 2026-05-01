@@ -23,20 +23,21 @@ public class ProofOfConceptConfigurableModulesApplication {
         SpringApplication.run(ProofOfConceptConfigurableModulesApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner createAdminUser() {
-//        return args -> {
-//            // Check if admin already exists
-//            userRepository.findByEmail("admin@email.com").orElseGet(() -> {
-//                User admin = User.builder()
-//                        .name("admin")
-//                        .email("admin@email.com")
+    @Bean
+    public CommandLineRunner createAdminUser() {
+        return args -> {
+            // Check if admin already exists
+            userRepository.findByEmail("admin@email.com").orElseGet(() -> {
+                User admin = User.builder()
+                        .name("admin")
+                        .email("admin@email.com")
 //                        .password(passwordEncoder.encode("!@#Abc123")) // hashed password
-//                        .build();
-//                System.out.println("Saving admin user...");
-//                return userRepository.save(admin);
-//            });
-//        };
-//    }
+                        .password(passwordEncoder.encode("12345")) // hashed password
+                        .build();
+                System.out.println("Saving admin user...");
+                return userRepository.save(admin);
+            });
+        };
+    }
 
 }

@@ -16,20 +16,18 @@ public class FormConfigDto {
 
     private Long id;
     private String key;
-    private String version;
     private String display;
     private String tableName;
-    private Long moduleId;
+    private Long moduleVersionId;
     private List<FieldConfigDto> fields;
 
     public static FormConfigDto fromEntity(FormConfig entity) {
         return FormConfigDto.builder()
                 .id(entity.getId())
                 .key(entity.getKey())
-//                .version(entity.getModuleVersion())
                 .display(entity.getDisplay())
                 .tableName(entity.getTableName())
-                .moduleId(entity.getId())
+                .moduleVersionId(entity.getModuleVersion().getId())
                 .fields(entity.getFields().stream().map(FieldConfigDto::fromEntity).collect(Collectors.toList()))
                 .build();
     }

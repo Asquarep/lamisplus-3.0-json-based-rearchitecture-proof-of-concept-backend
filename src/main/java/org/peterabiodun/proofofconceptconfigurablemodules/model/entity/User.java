@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.CreateUserdto;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.UserDto;
 
@@ -14,10 +15,10 @@ import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+@Entity
 @Table(name = "users")
 public class User extends BaseEntity {
 

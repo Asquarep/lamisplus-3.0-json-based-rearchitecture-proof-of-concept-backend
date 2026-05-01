@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class PermissionDto {
-    private UUID id;
+    private Long id;
     private String name;
     private String description;
 

@@ -5,6 +5,8 @@ import AppRoutes from "./routes/AppRoutes";
 import { registerUnauthorizedHandler } from "./setting/interceptor";
 import { logout, fetchMe } from "./store/slices/authSlice";
 import APPLICATION_ROUTES from "./util/APPLICATION_ROUTES";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /* ============================
    WRAPPER
@@ -40,7 +42,23 @@ function App() {
     }
   }, [token, dispatch]);
 
-  return <AppRoutes />;
+  return (
+    <>
+      <AppRoutes />
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
+  );
 }
 
 export default AppWrapper;

@@ -2,42 +2,37 @@ package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FormConfigDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@Entity
-@Table(name = "forms")
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FormConfig {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+@Entity
+@Table(name = "forms")
+public class FormConfig extends BaseEntity {
     private String key;
-    private String version;
     private String display;
     private String tableName;
 
     @ManyToOne
+    @JoinColumn(name = "module_version_id")
     private ModuleVersion moduleVersion;
-
-    @ManyToOne
-    @JoinColumn(name = "module_id")
-    private ModuleConfig module;
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FieldConfig> fields;
-    
+
+
     public static FormConfig fromDto(FormConfigDto dto) {
         return FormConfig.builder()
+                .id(dto.getId())
                 .display(dto.getDisplay())
                 .tableName(dto.getTableName())
-                .module(null)
+                .moduleVersion(null)
                 .fields(dto.getFields().stream().map(FieldConfig::fromDto).collect(Collectors.toList()))
-                .id(dto.getId())
                 .build();
     }
 

@@ -10,7 +10,7 @@ import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.FieldConf
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FieldConfigDto {
-    Long id;
+    private Long id;
     private String display;
     private String name;
     private String type;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -17,13 +17,22 @@ import {
 import api from "../setting/interceptor";
 import FormDataDialog from "../components/FormDataDialog";
 import { snakeToTitleCase } from "../util/ReusableFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import { setBreadcrumbs } from "../store/slices/uiSlice";
+import { fetchModules } from "../store/slices/modulesSlice";
+import APPLICATION_ROUTES from "../util/APPLICATION_ROUTES";
 
 const ModuleDetailPage = () => {
+  const [searchParams] = useSearchParams();
+  const moduleId = searchParams.get('id');
   const location = useLocation();
-  const module = location.state;
+  const { list: modules } = useSelector(state => state.modules);
+
+  // Prefer location.state, fallback to finding in Redux by ID
+  const module = location.state || modules.find(m => String(m.id) === String(moduleId));
 
   console.log("module: ", module);
-  
+
 
   const [forms, setForms] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
@@ -31,6 +40,26 @@ const ModuleDetailPage = () => {
   const [formDataMap, setFormDataMap] = useState({});
   const [selectedForm, setSelectedForm] = useState(null);
   const [loadingTable, setLoadingTable] = useState(false);
+  const dispatch = useDispatch();
+
+  // Ensure modules are fetched if the list is empty
+  useEffect(() => {
+    if (modules.length === 0) {
+      dispatch(fetchModules());
+    }
+  }, [dispatch, modules.length]);
+
+  useEffect(() => {
+    if (module) {
+      dispatch(setBreadcrumbs([
+        { label: 'Home', path: APPLICATION_ROUTES.DASHBOARD },
+        {
+          label: module.name,
+          path: `${APPLICATION_ROUTES.MODULE_DETAIL}?id=${module.id}`
+        }
+      ]));
+    }
+  }, [module, dispatch]);
 
   // Fetch forms for the module
   useEffect(() => {
@@ -38,7 +67,7 @@ const ModuleDetailPage = () => {
 
     const fetchForms = async () => {
       try {
-        const response = await api.get(`/api/forms/module/${module.id}`);
+        const response = await api.get(`/api/forms/active-version/${module.key}`);
         const fetchedForms = response.data;
         setForms(fetchedForms);
 
@@ -89,7 +118,7 @@ const ModuleDetailPage = () => {
         No module selected.
       </Typography>
     );
-  }  
+  }
 
   return (
     <Box

@@ -60,5 +60,20 @@ public class ModuleController {
     public ResponseEntity<List<ModuleConfigDto>> getModules() {
         return ResponseEntity.ok(moduleService.getAllModules());
     }
+
+    @PostMapping("/{id}/activate")
+    public ResponseEntity<String> activateModule(@PathVariable Long id) {
+        return ResponseEntity.ok(moduleService.activateModule(id));
+    }
+
+    @PostMapping("/{id}/deactivate")
+    public ResponseEntity<String> deactivateModule(@PathVariable Long id) {
+        return ResponseEntity.ok(moduleService.deactivateModule(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> uninstallModule(@PathVariable Long id) {
+        return ResponseEntity.ok(moduleService.uninstallModule(id));
+    }
 }
 

@@ -1,35 +1,48 @@
 package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseEntity {
+@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity implements Serializable {
     @Id
-    @GeneratedValue(generator = "pg-uuid")
-    @GenericGenerator(
-            name = "pg-uuid",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(unique = true)
-    private UUID id;
-    @CreatedDate
-    private LocalDate createdDate;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdDate = LocalDate.now();
-    }
+    @Column(unique = true)
+    private UUID uuid;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm a")
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+    @CreatedBy
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+
 
 
 }

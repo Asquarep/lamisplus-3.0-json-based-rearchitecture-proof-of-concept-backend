@@ -15,7 +15,7 @@ const useCustomNavigate = () => {
 };
 
 const confirmAccess = (path) => {
-    console.log("user: ", user);
+  // return true; // Temporary bypass for access control during development
     console.log("path: ", path);
     let route = findRoute(publicRoutes, path);
     console.log("route public: ", route);

@@ -2,18 +2,16 @@ package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FieldConfigDto;
 
-@Data@Entity
-@Table(name = "fields")
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FieldConfig {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+@Entity
+@Table(name = "fields")
+public class FieldConfig extends BaseEntity{
     private Long key;
     private String display;
     private String name;

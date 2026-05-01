@@ -6,43 +6,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
+import lombok.experimental.SuperBuilder;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.ModuleConfigDto;
 
 @Data
-@Entity
-@Table(name = "modules")
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModuleConfig {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+@Entity
+@Table(name = "modules")
+public class ModuleConfig extends BaseEntity {
 
     private String name;
     @Column(unique = true, nullable = false)
     private String key;
+    private String description;
 
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<FormConfig> forms;
+    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ModuleVersion> versions;
 
     public static ModuleConfig fromDto(ModuleConfigDto dto) {
         return ModuleConfig.builder()
                 .name(dto.getName())
                 .key(dto.getKey())
                 .id(dto.getId())
-                .forms(
-                        dto.getForms().stream().map(FormConfig::fromDto).collect(Collectors.toList())
-                )
+                .description(dto.getDescription())
                 .build();
     }
 
-    @PrePersist
-    @PreUpdate
-    private void updateChildReferences() {
-        if (forms != null) {
-            forms.forEach(f -> f.setModule(this));
-        }
-    }
+
 }

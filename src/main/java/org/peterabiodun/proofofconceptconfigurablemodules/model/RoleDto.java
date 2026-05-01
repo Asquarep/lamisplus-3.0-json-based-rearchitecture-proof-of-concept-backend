@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class RoleDto {
-    private UUID id;
+    private Long id;
     private String name;
     private Set<PermissionDto> permissions;
 

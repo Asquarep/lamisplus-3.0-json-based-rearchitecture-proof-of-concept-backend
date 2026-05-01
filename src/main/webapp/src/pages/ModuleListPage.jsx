@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
   Button,
   Grid,
-  Card,
   CardContent,
   CardActions,
   IconButton,
@@ -28,8 +28,12 @@ import {
   uninstallModule,
   checkModuleUpdates,
 } from "../store/slices/modulesSlice";
+import { setBreadcrumbs } from "../store/slices/uiSlice";
 
 import ModuleUploadModal from "../components/ModuleUploadModal";
+import ReusableCardComponent from "../components/common/ReusableCardComponent";
+import useCustomNavigate from "../hooks/useCustomNavigate";
+import APPLICATION_ROUTES from "../util/APPLICATION_ROUTES";
 
 const ModuleListPage = () => {
   // const [modules, setModules] = useState([]);
@@ -39,10 +43,12 @@ const ModuleListPage = () => {
 
   const dispatch = useDispatch();
   const { list: modules, loading } = useSelector(state => state.modules);
+  const navigate = useCustomNavigate();
 
   useEffect(() => {
-  // dispatch(fetchModules());
-}, [dispatch]);
+    dispatch(setBreadcrumbs([{ label: 'Home', path: APPLICATION_ROUTES.DASHBOARD }]));
+    // dispatch(fetchModules());
+  }, [dispatch]);
 
   const handleMenuOpen = (event, module) => {
     setAnchorEl(event.currentTarget);
@@ -82,27 +88,27 @@ const ModuleListPage = () => {
   // };
 
   const handleAction = async (action) => {
-  if (!selectedModule) return;
+    if (!selectedModule) return;
 
-  switch (action) {
-    case "activate":
-      dispatch(activateModule(selectedModule.id));
-      break;
-    case "deactivate":
-      dispatch(deactivateModule(selectedModule.id));
-      break;
-    case "uninstall":
-      dispatch(uninstallModule(selectedModule.id));
-      break;
-    case "update":
-      dispatch(checkModuleUpdates(selectedModule.id));
-      break;
-    default:
-      break;
-  }
+    switch (action) {
+      case "activate":
+        dispatch(activateModule(selectedModule.id));
+        break;
+      case "deactivate":
+        dispatch(deactivateModule(selectedModule.id));
+        break;
+      case "uninstall":
+        dispatch(uninstallModule(selectedModule.id));
+        break;
+      case "update":
+        dispatch(checkModuleUpdates(selectedModule.id));
+        break;
+      default:
+        break;
+    }
 
-  handleMenuClose();
-};
+    handleMenuClose();
+  };
 
   return (
     <Box>
@@ -126,115 +132,95 @@ const ModuleListPage = () => {
         </Button>
       </Box>
 
-      {modules.length > 0 ? <Grid container spacing={3}>
-        {modules.map((m) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={m.id}>
-            <Card
-              // sx={{
-              //   cursor: "pointer",
-              //   transition: "transform 0.2s ease",
-              //   "&:hover": { transform: "scale(1.02)" },
-              // }}
-              sx={{
-                height: '100%',
-                display: 'flex',
-                cursor: "pointer",
-                flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 6,
-                  border: '1px solid #1976d2',
-                  backgroundColor: '#dcecfcff'
-                },
-                borderRadius: 3,
-                overflow: 'hidden',
-                border: '1px solid',
-                borderColor: 'divider'
-              }}
-              // onClick={() => onSelectModule(m)}
-            >
-              <CardContent>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    {m.name}
+      {modules.length > 0 ? (
+        <Grid container spacing={3}>
+          {modules.map((m) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={m.id}>
+              <ReusableCardComponent useActionArea={false}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => navigate(`${APPLICATION_ROUTES.MODULE_DETAIL}?id=${m.id}`, { state: m })}
+                  >
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      {m.name}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMenuOpen(e, m);
+                      }}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                  </Box>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mt: 1, mb: 2 }}
+                  >
+                    {m.description || "This module adds extended functionality."}
                   </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMenuOpen(e, m);
-                    }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                </Box>
 
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 1, mb: 2 }}
-                >
-                  {m.description || "This module adds extended functionality."}
-                </Typography>
+                  <Divider sx={{ mb: 1 }} />
+                  <Typography variant="body2" sx={{ mb: 0.5 }}>
+                    <strong>Version:</strong> {m.version || "1.0.0"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Installed: {"3 minutes ago"}
+                    {/* {new Date(m.installedAt || m.createdAt).toLocaleDateString()} */}
+                  </Typography>
+                </CardContent>
 
-                <Divider sx={{ mb: 1 }} />
-                <Typography variant="body2" sx={{ mb: 0.5 }}>
-                  <strong>Version:</strong> {m.version || "1.0.0"}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Installed: {"3 minutes ago"}
-                  {/* {new Date(m.installedAt || m.createdAt).toLocaleDateString()} */}
-                </Typography>
-              </CardContent>
+                <CardActions disableSpacing>
+                  <Tooltip title="Activate/Deactivate">
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction(m.active ? "deactivate" : "activate");
+                      }}
+                    >
+                      <PowerIcon
+                        color={m.active ? "success" : "disabled"}
+                        fontSize="small"
+                      />
+                    </IconButton>
+                  </Tooltip>
 
-              <CardActions disableSpacing>
-                <Tooltip title="Activate/Deactivate">
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction(m.active ? "deactivate" : "activate");
-                    }}
-                  >
-                    <PowerIcon
-                      color={m.active ? "success" : "disabled"}
-                      fontSize="small"
-                    />
-                  </IconButton>
-                </Tooltip>
+                  <Tooltip title="Check for Updates">
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction("update");
+                      }}
+                    >
+                      <UpdateIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
 
-                <Tooltip title="Check for Updates">
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("update");
-                    }}
-                  >
-                    <UpdateIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title="Uninstall Module">
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("uninstall");
-                    }}
-                  >
-                    <DeleteIcon fontSize="small" color="error" />
-                  </IconButton>
-                </Tooltip>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid> : (
+                  <Tooltip title="Uninstall Module">
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction("uninstall");
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" color="error" />
+                    </IconButton>
+                  </Tooltip>
+                </CardActions>
+              </ReusableCardComponent>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
         <Typography>No modules installed. Upload a module to get started.</Typography>
       )}
 

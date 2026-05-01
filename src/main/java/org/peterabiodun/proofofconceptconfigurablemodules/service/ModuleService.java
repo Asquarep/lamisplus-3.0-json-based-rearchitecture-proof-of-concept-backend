@@ -11,13 +11,18 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.FileSystemResourceAccessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.peterabiodun.proofofconceptconfigurablemodules.exception.BadRequestException;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FieldConfigDto;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FormConfigDto;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.ModuleConfigDto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.Status;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.ModuleConfig;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.entity.ModuleVersion;
 import org.peterabiodun.proofofconceptconfigurablemodules.repository.ModuleRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.ModuleVersionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -25,6 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -38,20 +44,35 @@ public class ModuleService {
     private DataSource dataSource;
 
     private final ModuleRepository  moduleRepository;
+    private final ModuleVersionRepository moduleVersionRepository;
 
+    @Transactional
     public ModuleConfigDto loadModule(File moduleFile) {
         try {
             // Parse the module JSON
-            ModuleConfigDto module = objectMapper.readValue(moduleFile, ModuleConfigDto.class);
+            ModuleConfigDto moduleConfigDto = objectMapper.readValue(moduleFile, ModuleConfigDto.class);
 
             // Generate Liquibase XML changelog for this module
-            generateLiquibaseChangeLog(module);
+            generateLiquibaseChangeLog(moduleConfigDto);
 
             // Normally, you’d call Liquibase API here to apply the changelog
 
-            ModuleConfig moduleConfig = ModuleConfig.fromDto(module);
-            moduleRepository.save(moduleConfig);
-            return module;
+            ModuleConfig foundModule = moduleRepository.findByKey(moduleConfigDto.getKey()).orElse(null);
+
+            if (foundModule == null){
+                ModuleConfig moduleConfig = ModuleConfig.fromDto(moduleConfigDto);
+                foundModule = moduleRepository.save(moduleConfig);
+            }
+            if (moduleVersionRepository.existsByVersionNumber(moduleConfigDto.getVersion())){
+                throw new BadRequestException("Module version " + moduleConfigDto.getVersion() +
+                        " already exists. Kindly upload another version");
+            }
+
+            ModuleVersion moduleVersion = ModuleVersion.fromModuleConfigDto(moduleConfigDto);
+            moduleVersion.setModule(foundModule);
+            moduleVersion.setStatus(Status.INACTIVE);
+            moduleVersionRepository.save(moduleVersion);
+            return moduleConfigDto;
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to load module from file: " + moduleFile.getName() + " - " + e.getMessage());
@@ -59,7 +80,28 @@ public class ModuleService {
     }
 
     public List<ModuleConfigDto> getAllModules() {
-        return moduleRepository.findAll().stream().map(ModuleConfigDto::fromEntity).collect(Collectors.toList());
+        return moduleRepository.findAllWithVersions().stream()
+                .map(m -> {
+                    ModuleConfigDto dto = ModuleConfigDto.fromEntity(m);
+                    if (m.getVersions() != null && !m.getVersions().isEmpty()) {
+                        // Find the latest version by createdAt
+                        ModuleVersion latest = m.getVersions().stream()
+                                .max((v1, v2) -> v1.getCreatedAt().compareTo(v2.getCreatedAt()))
+                                .orElse(null);
+                        
+                        if (latest != null) {
+                            dto.setVersion(latest.getVersionNumber());
+                            dto.setCodename(latest.getCodename());
+                        }
+                        
+                        // A module is considered active if any of its versions is ACTIVE
+                        boolean anyActive = m.getVersions().stream()
+                                .anyMatch(v -> v.getStatus() == Status.ACTIVE);
+                        dto.setActive(anyActive);
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     private void generateLiquibaseChangeLog(ModuleConfigDto module) throws Exception {
@@ -156,6 +198,54 @@ public class ModuleService {
             liquibase.update(new Contexts(), new LabelExpression());
 
         }
+    }
+
+    @Transactional
+    public String activateModule(Long id) {
+        ModuleConfig module = moduleRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Module not found with id: " + id));
+        
+        if (module.getVersions() == null || module.getVersions().isEmpty()) {
+            throw new BadRequestException("Module has no versions to activate");
+        }
+
+        // Find the latest version and activate it
+        ModuleVersion latest = module.getVersions().stream()
+                .max((v1, v2) -> v1.getCreatedAt().compareTo(v2.getCreatedAt()))
+                .orElseThrow(() -> new BadRequestException("No latest version found"));
+
+        // Deactivate others, activate latest
+        module.getVersions().forEach(v -> {
+            if (v.getId().equals(latest.getId())) {
+                v.setStatus(Status.ACTIVE);
+            } else {
+                v.setStatus(Status.INACTIVE);
+            }
+        });
+
+        moduleVersionRepository.saveAll(module.getVersions());
+        return "Module latest version activated successfully";
+    }
+
+    @Transactional
+    public String deactivateModule(Long id) {
+        ModuleConfig module = moduleRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Module not found with id: " + id));
+
+        if (module.getVersions() != null) {
+            module.getVersions().forEach(v -> v.setStatus(Status.INACTIVE));
+            moduleVersionRepository.saveAll(module.getVersions());
+        }
+        return "Module deactivated successfully";
+    }
+
+    @Transactional
+    public String uninstallModule(Long id) {
+        if (!moduleRepository.existsById(id)) {
+            throw new BadRequestException("Module not found with id: " + id);
+        }
+        moduleRepository.deleteById(id);
+        return "Module uninstalled successfully";
     }
 
 }

@@ -1,8 +1,10 @@
 package org.peterabiodun.proofofconceptconfigurablemodules.service;
 
 import org.peterabiodun.proofofconceptconfigurablemodules.model.FormConfigDto;
+import org.peterabiodun.proofofconceptconfigurablemodules.model.Status;
 import org.peterabiodun.proofofconceptconfigurablemodules.repository.FormRepository;
 import org.peterabiodun.proofofconceptconfigurablemodules.repository.GenericJdbcRepository;
+import org.peterabiodun.proofofconceptconfigurablemodules.repository.ModuleVersionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class FormDataService {
     private GenericJdbcRepository repo;
     @Autowired
     private FormRepository formRepository;
+    @Autowired
+    private ModuleVersionRepository moduleVersionRepository;
 
     // Save data to dynamic table
     public void saveFormData(String tableName, Map<String, Object> data) {
@@ -34,5 +38,13 @@ public class FormDataService {
         return formRepository.findByModuleId(moduleId)
                 .stream().map(FormConfigDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public List<FormConfigDto> fetchActiveFormsByModuleKey(String moduleKey) {
+        return moduleVersionRepository.findByModuleKeyAndStatus(moduleKey, Status.ACTIVE.toString())
+                .map(version -> version.getForms().stream()
+                        .map(FormConfigDto::fromEntity)
+                        .collect(Collectors.toList()))
+                .orElse(List.of());
     }
 }

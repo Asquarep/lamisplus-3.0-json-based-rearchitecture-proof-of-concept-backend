@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class UserDto {
-        private UUID id;
+        private Long id;
         @Size(max = 100, message = "String field cannot exceed 100 characters")
         private String name;
 

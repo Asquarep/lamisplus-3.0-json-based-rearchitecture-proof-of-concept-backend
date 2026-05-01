@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ModuleListPage from "../pages/ModuleListPage";
+import DashboardPage from "../pages/DashboardPage";
 import ModuleDetailPage from "../pages/ModuleDetailPage";
 import LoginPage from "../pages/LoginPage";
 import Layout from "../components/Layout";
@@ -20,6 +21,10 @@ function AppRoutes() {
             >
                 <Route
                     path="/app/dashboard"
+                    element={<DashboardPage />}
+                />
+                <Route
+                    path="/app/modules"
                     element={<ModuleListPage />}
                 />
                 <Route

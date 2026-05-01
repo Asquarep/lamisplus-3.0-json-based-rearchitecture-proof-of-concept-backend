@@ -2,19 +2,16 @@ package org.peterabiodun.proofofconceptconfigurablemodules.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.peterabiodun.proofofconceptconfigurablemodules.model.RoleDto;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@Table(name = "roles")
-@Getter
-@Setter
-@ToString
+@Data
+@SuperBuilder
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Table(name = "roles")
 public class Role extends BaseEntity {
     @Column(length = 60)
     private String name;
@@ -24,7 +21,7 @@ public class Role extends BaseEntity {
     private Set<Permission> permissions;
 
     public static Role fromDto(RoleDto roleDto) {
-        return new RoleBuilder()
+        return Role.builder()
                 .name(roleDto.getName())
                 .build();
     }

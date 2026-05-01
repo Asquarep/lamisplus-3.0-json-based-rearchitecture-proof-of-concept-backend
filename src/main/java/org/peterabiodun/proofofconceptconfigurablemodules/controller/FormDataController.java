@@ -35,4 +35,9 @@ public class FormDataController {
     public ResponseEntity<List<FormConfigDto>> fetchFormData(@PathVariable("moduleId") Long moduleId) {
         return ResponseEntity.ok(service.fetchFormsByModuleId(moduleId));
     }
+
+    @GetMapping("/active-version/{moduleKey}")
+    public ResponseEntity<List<FormConfigDto>> fetchActiveVersionForms(@PathVariable("moduleKey") String moduleKey) {
+        return ResponseEntity.ok(service.fetchActiveFormsByModuleKey(moduleKey));
+    }
 }

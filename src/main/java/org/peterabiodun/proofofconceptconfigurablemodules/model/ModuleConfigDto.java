@@ -14,6 +14,10 @@ public class ModuleConfigDto {
     private Long id;
     private String name;
     private String key;
+    private String description;
+    private String codename;
+    private String version;
+    private boolean active;
     private List<FormConfigDto> forms;
 
     public  static ModuleConfigDto fromEntity(ModuleConfig moduleConfig) {
@@ -21,7 +25,7 @@ public class ModuleConfigDto {
                 .id(moduleConfig.getId())
                 .name(moduleConfig.getName())
                 .key(moduleConfig.getKey())
-                .forms(moduleConfig.getForms().stream().map(FormConfigDto::fromEntity).collect(Collectors.toList()))
+                .description(moduleConfig.getDescription())
                 .build();
     }
 }
